@@ -10,7 +10,6 @@
 #include <iostream>
 #include <vector>
 #define MAX 500 // 대나무 숲 크기는 최대 500
-#define BAMBOO 1000000 // 대나무 양은 최대 1,000,000
 
 using namespace std;
 
