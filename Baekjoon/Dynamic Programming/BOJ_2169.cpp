@@ -66,8 +66,8 @@ int dynamic_programming(int x, int y)
 //        int next_dynamic = dynamic_programming(next_x, next_y);
 //        now_answer = max(now_answer, next_dynamic);
 //        dp[next_x][next_y] = now_answer;
-        dp[next_x][next_y] = max(now_answer, now_answer + mars[next_x][next_y]);
-        dynamic_programming(next_x, next_y);
+        dp[next_x][next_y] = max(now_answer, now_answer + dynamic_programming(next_x, next_y));
+//        dynamic_programming(next_x, next_y);
     }
     
     return now_answer;
