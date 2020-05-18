@@ -15,7 +15,7 @@ using namespace std;
 
 int n, m;
 int mars[MAX][MAX];
-int dp[MAX][MAX];
+int dp[MAX][MAX]; // (1, 1)에서부터 (i, j)까지 이동했을 때 합이 최대가 되는 값들을 저장..?
 int dx[3] = { 0, 0, 1 }; // (왼쪽, 오른쪽, 아래쪽)
 int dy[3] = { -1, 1, 0 }; // (왼쪽, 오른쪽, 아래쪽)
 
@@ -26,15 +26,24 @@ void input()
     for (int i = 0; i <=n; i++)
         for (int j = 0; j <= m; j++)
         {
+            dp[i][j] = 0;
+            
             if (i == 0 || j == 0)
                 mars[i][j] = 0;
+            else if (i == 1 && j == 1)
+            {
+                cin >> mars[i][j];
+                dp[i][j] = mars[i][j]; // dp[1][1]에만 mars[1][1]과 같은 값을 넣어둔다.
+            }
             else
                 cin >> mars[i][j];
         }
 }
 
-int dynamic_programming(int x, int y, int now_answer)
+int dynamic_programming(int x, int y)
 {
+    int now_answer = dp[x][y];
+    
     // 오른족 아래(n, m)에 도착하면 (n, m)위치의 값을 더해 그 값을 return 한다.
     if (x == n && y == m)
         return now_answer + mars[x][y];
@@ -52,8 +61,13 @@ int dynamic_programming(int x, int y, int now_answer)
         if (next_x == n && next_y == m)
             return now_answer + mars[next_x][next_y];
         
-        int next_dynamic = dynamic_programming(next_x, next_y, now_answer);
-        now_answer = max(now_answer, next_dynamic);
+        // 제대로 된 위치라면 ..
+        // 이동해서 또 수행 ..?
+//        int next_dynamic = dynamic_programming(next_x, next_y);
+//        now_answer = max(now_answer, next_dynamic);
+//        dp[next_x][next_y] = now_answer;
+        dp[next_x][next_y] = max(now_answer, now_answer + mars[next_x][next_y]);
+        dynamic_programming(next_x, next_y);
     }
     
     return now_answer;
@@ -61,9 +75,7 @@ int dynamic_programming(int x, int y, int now_answer)
 
 int max_answer()
 {
-    int now = mars[1][1];
-    
-    int answer = dynamic_programming(1, 1, now);
+    int answer = dynamic_programming(1, 1);
     
     return answer;
 }
