@@ -44,12 +44,12 @@ int getMax()
         leftRightCompare[0][0] = dp[i - 1][1]; // ?
         
         for (int j = 1; j <= m; j++)
-            leftRightCompare[0][j] = max(leftRightCompare[0][j - 1], dp[i - 1][j] + mars[i][j]);
+            leftRightCompare[0][j] = max(leftRightCompare[0][j - 1], dp[i - 1][j]) + mars[i][j];
         
         leftRightCompare[1][m + 1] = dp[i - 1][m];
         
         for (int j = m; j >= 1; j--)
-            leftRightCompare[1][j] = max(leftRightCompare[1][j + 1], dp[i - 1][j] + mars[i][j]);
+            leftRightCompare[1][j] = max(leftRightCompare[1][j + 1], dp[i - 1][j]) + mars[i][j];
         
         for (int j = 1; j <= m; j++)
             dp[i][j] = max(leftRightCompare[0][j], leftRightCompare[1][j]);
