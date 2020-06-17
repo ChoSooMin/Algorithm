@@ -16,28 +16,45 @@ int N, x, y;
 
 int getRoundNum()
 {
-    int roundNum = 0;
+    int round = 1;
     
-    while (N != 1)
+    while (1)
     {
-        if (N % 2 == 0) // N이 짝수일 때
+        // 인접해있고, 더 작은 숫자를 2로 나눈 나머지가 1일 때 break
+        if (x > y && (x == y + 1) && (y % 2 == 1))
         {
-            N = N / 2;
+            break;
         }
-        else // N이 홀수일 때
+        else if (y > x && (y == x + 1) && (x % 2 == 1))
         {
-            N = (N + 1) / 2;
+            break;
         }
-        roundNum++;
+        
+        // 다음 라운드로 진행될 때마다 현재 index의 /2 값으로 바뀐다..
+        if (x % 2 == 0)
+            x = x / 2;
+        else
+            x = (x + 1) / 2;
+
+        if (y % 2 == 0)
+            y = y / 2;
+        else
+            y = (y + 1) / 2;
+        
+        // round + 1 해준다.
+        round += 1;
     }
     
-    return roundNum;
+    return round;
 }
 
 int main()
 {
     // input
-    cin >> N >> x >> y;
+    cin >> N;
+    cin >> x >> y;
+    
+    // output
     cout << getRoundNum() << endl;
     
     return 0;
