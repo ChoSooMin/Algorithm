@@ -16,7 +16,7 @@ int N;
 
 int main()
 {
-    cin >> N; // N 입력 받기
+    cin >> N; // N 입력 받기 
     
     
     
