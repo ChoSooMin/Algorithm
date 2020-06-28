@@ -13,7 +13,7 @@
 using namespace std;
 
 const long MOD = 987654321;
-long dp[10002];
+long dp[10000];
 
 long getNumber(int N)
 {
