@@ -52,15 +52,7 @@ int main()
     else if (fibo > 0)
         cout << 1 << endl << fibo % MOD << endl;
     else
-    {
         cout << -1 << endl << (fibo * (-1)) % MOD << endl;
-//        cout << -1 << endl;
-        
-//        if (fibo < 0)
-//            cout << -1 << endl <<  % MOD << endl;
-//        else
-//            cout << 1 << endl << getFibonacci(n) % MOD << endl;
-    }
         
     return 0;
 }
