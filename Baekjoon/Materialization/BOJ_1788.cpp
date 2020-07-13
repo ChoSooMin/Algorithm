@@ -11,48 +11,38 @@
 #include <stdio.h>
 
 #define MOD 1000000000
+#define ABS(X) ((X) > 0 ? (X) : (X) * -1)
 
 using namespace std;
 
-int fibonacci[1000001];
-
-int getFibonacci(int n)
-{
-    if (n == 0) // 0일 때
-        return fibonacci[0];
-    else if (n > 0) // 양수일 때
-        return fibonacci[n];
-    else // 음수일 때
-    {
-        if (n % 2 == 0) // 2로 나누어 떨어질 때 (절대값이 짝수일 때)
-            return fibonacci[n * (-1)] * (-1);
-        else // 2로 나누어 떨어지지 않을 때 (절대값이 홀수일 때)
-            return fibonacci[n * (-1)];
-    }
-}
+int arrp[1000001];
+int n;
 
 int main()
 {
-    int n;
-    
     // fibonacci 배열에 양수일 때의 피보나치 값을 구해서 넣어둔다.
-    fibonacci[0] = 0;
-    fibonacci[1] = 1;
+    arrp[0] = 0;
+    arrp[1] = 1;
     
     for (int i = 2; i <= 1000000; i++)
-        fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
+        arrp[i] = arrp[i - 1] + arrp[i - 2] % MOD;
     
     cin >> n; // n을 입력받는다.
     
     // 출력
-    int fibo = getFibonacci(n);
-    
-    if (fibo == 0)
-        cout << 0 << endl << fibo % MOD << endl;
-    else if (fibo > 0)
-        cout << 1 << endl << fibo % MOD << endl;
+    if (n > 0)
+        cout << 1 << endl;
+    else if (n == 0)
+        cout << 0 << endl;
     else
-        cout << -1 << endl << (fibo * (-1)) % MOD << endl;
+    {
+        if (n % 2 == 0)
+            cout << -1 << endl;
+        else
+            cout << 1 << endl;
+    }
+    cout << arrp[ABS(n)] % MOD << endl;
+    
         
     return 0;
 }
