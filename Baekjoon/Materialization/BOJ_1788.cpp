@@ -14,7 +14,7 @@
 
 using namespace std;
 
-int fibonacci[10000001];
+int fibonacci[1000001];
 
 int getFibonacci(int n)
 {
@@ -24,12 +24,10 @@ int getFibonacci(int n)
         return fibonacci[n];
     else // 음수일 때
     {
-        int abs = n * (-1);
-        
-        if (abs % 2 == 0) // 절대값이 짝수일 때
-            return fibonacci[abs] * (-1);
-        else // 절대값이 홀수일 때
-            return fibonacci[abs];
+        if (n % 2 == 0) // 2로 나누어 떨어질 때 (절대값이 짝수일 때)
+            return fibonacci[n * (-1)] * (-1);
+        else // 2로 나누어 떨어지지 않을 때 (절대값이 홀수일 때)
+            return fibonacci[n * (-1)];
     }
 }
 
@@ -41,25 +39,27 @@ int main()
     fibonacci[0] = 0;
     fibonacci[1] = 1;
     
-    for (int i = 2; i < 1000000; i++)
+    for (int i = 2; i <= 1000000; i++)
         fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
     
     cin >> n; // n을 입력받는다.
     
     // 출력
-    if (n == 0)
-        cout << 0 << endl << getFibonacci(n) % MOD << endl;
-    else if (n > 0)
-        cout << 1 << endl << getFibonacci(n) % MOD << endl;
+    int fibo = getFibonacci(n);
+    
+    if (fibo == 0)
+        cout << 0 << endl << fibo % MOD << endl;
+    else if (fibo > 0)
+        cout << 1 << endl << fibo % MOD << endl;
     else
     {
-        cout << -1 << endl;
+        cout << -1 << endl << (fibo * (-1)) % MOD << endl;
+//        cout << -1 << endl;
         
-        int fibo = getFibonacci(n);
-        if (fibo < 0)
-            cout << (getFibonacci(n) * (-1)) % MOD << endl;
-        else
-            cout << getFibonacci(n) % MOD << endl;
+//        if (fibo < 0)
+//            cout << -1 << endl <<  % MOD << endl;
+//        else
+//            cout << 1 << endl << getFibonacci(n) % MOD << endl;
     }
         
     return 0;
