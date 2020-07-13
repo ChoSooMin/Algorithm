@@ -25,7 +25,7 @@ int main()
     arrp[1] = 1;
     
     for (int i = 2; i <= 1000000; i++)
-        arrp[i] = arrp[i - 1] + arrp[i - 2] % MOD;
+        arrp[i] = (arrp[i - 1] + arrp[i - 2]) % MOD;
     
     cin >> n; // n을 입력받는다.
     
@@ -42,7 +42,6 @@ int main()
             cout << 1 << endl;
     }
     cout << arrp[ABS(n)] % MOD << endl;
-    
         
     return 0;
 }
