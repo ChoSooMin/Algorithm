@@ -14,8 +14,8 @@
 using namespace std;
 
 int N; // 차의 대수
-vector<string> daegeun; // 대근이가 적은 차량 번호 목록
-vector<string> yeongsik; // 영식이가 적은 차량 번호 목록
+vector<string> daegeun; // 대근이가 적은 차량 목록
+vector<string> yeongsik; // 영식이가 적은 차량 목록
 
 void input()
 {
@@ -43,6 +43,14 @@ int getOvertakeCar()
      daegeun = [ 1, 2, 3, 4 ]
      yeongsik = [ 2, 3, 4, 1 ] 로 바꿔서 .. 비교..?
      */
+    vector<int> yeongsikInteger;
+    yeongsikInteger.resize(yeongsik.size());
+    
+    // 정렬을 어떻게 하징 .. 
+    for (int i = 0; i < yeongsik.size(); i++)
+    {
+        
+    }
     
     return overtakeCar;
 }
