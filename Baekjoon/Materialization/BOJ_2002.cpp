@@ -16,6 +16,7 @@ using namespace std;
 int N; // 차의 대수
 vector<string> daegeun; // 대근이가 적은 차량 목록
 vector<string> yeongsik; // 영식이가 적은 차량 목록
+vector<string> overtakeCars; // 추월한 차량 목록
 
 void input()
 {
@@ -31,35 +32,50 @@ void input()
         cin >> yeongsik[i];
 }
 
-int getOvertakeCar()
+bool isInOvertakeVector(string s, vector<string> &v)
 {
-    int overtakeCar = 0;
+    // 추월한 차량 목록에 있는 차인지 확인
+    for (int i = 0; i < v.size(); i++)
+        if (s == v[i])
+            return true; // 목록에 있다면 true를
     
-    /**
-     daegeun 벡터와 yeongsik 벡터의 값들의 순서를 비교해서 순서가 다른 차가 몇 개인지 구하면 되지 않을까?
-     ex)
-     daegeun = [ A, B, C, D ]
-     yeongsik = [ B, C, D, A ] 일 때
-     daegeun = [ 1, 2, 3, 4 ]
-     yeongsik = [ 2, 3, 4, 1 ] 로 바꿔서 .. 비교..?
-     */
-    vector<int> yeongsikInteger;
-    yeongsikInteger.resize(yeongsik.size());
+    return false; // 없다면 false를 반환한다.
+}
+
+int getOvertakesNumber()
+{
+    // daegeun 벡터와 yeongsik 벡터를 0부터 접근, 비교한다.
+    int daegeunIndex = 0;
+    int yeongsikIndex = 0;
     
-    // 정렬을 어떻게 하징 .. 
-    for (int i = 0; i < yeongsik.size(); i++)
+    while (daegeunIndex < daegeun.size() && yeongsikIndex < yeongsik.size())
     {
-        
+        if (daegeun[daegeunIndex] == yeongsik[yeongsikIndex]) // 차량의 순서가 같으면 index를 1 증가시킨다.
+        {
+            daegeunIndex++;
+            yeongsikIndex++;
+        }
+        else // 순서가 같지 않으면
+        {
+            if (isInOvertakeVector(daegeun[daegeunIndex], overtakeCars)) // daegeun 벡터의 daegeunIndex 위치에 있는 차가 overtakeCars에 들어있다면
+                daegeunIndex++; // daegeunIndex를 1 증가시킨다.
+            else // 아니라면
+            {
+                overtakeCars.push_back(yeongsik[yeongsikIndex]); // overtakeCars 벡터에 yeongsik 벡터의 yeongsikIndex 위치에 있는 차를 넣고
+                yeongsikIndex++; // yeongsikIndex를 1 증가시킨다.
+            }
+        }
     }
     
-    return overtakeCar;
+    // daegeun 벡터와 yeongsik 벡터를 모두 돌았다면
+    return (int)overtakeCars.size(); // overtakeCars 벡터의 size를 반환해주면 답이 된다.
 }
 
 int main()
 {
     input();
 
-    cout << getOvertakeCar() << endl; // output
+    cout << getOvertakesNumber() << endl;
     
     return 0;
 }
