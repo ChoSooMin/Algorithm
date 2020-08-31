@@ -15,6 +15,7 @@ using namespace std;
 
 int N; // 대회에 참가하는 학교의 수
 vector<int> studentNumber; // 각 학교의 학생 수 벡터
+// 이 문제는 벡터로 풀면 메모리가 터진다..!
 
 void input()
 {
