@@ -28,28 +28,29 @@ void input()
 
 int getMaxNum()
 {
-    int max = 0;
+    int max = 0; // 본선에 참가할 수 있는 사람의 수의 최댓값
     
+    // 벡터를 두 번 접근 -> 시간복잡도가 n의 제곱근 -> timeout이 난다.
     for (int i = 0; i < studentNumber.size(); i++)
     {
         int schoolNum = 0;
-        int currentNum = studentNumber[i];
+        int currentNum = studentNumber[i]; // 홍준이가 정한 팀원의 수
         
+        // 벡터를 다시 접근하여 currentNum으로 나누어 떨어지는 학교의 수가 몇인지 센다.
         for (int j = 0; j < studentNumber.size(); j++)
         {
             if (studentNumber[j] % currentNum == 0)
-            {
                 schoolNum += 1;
-            }
         }
         
+        // 학교의 수가 1이라면 continue로 건너뛴다. (적어도 두 팀이 본선에 참가해야 하기 때문)
         if (schoolNum == 1)
             continue;
         
-        int current = schoolNum * currentNum;
+        int current = schoolNum * currentNum; // current는 currentNum이 studentNumber[i]일 때, 본선에 참가하는 사람의 수이다.
         
-        if (max < current)
-            max = current;
+        if (max < current) // max보다 current값이 크다면
+            max = current; // max를 current값으로 바꿔준다.
     }
     
     return max;
