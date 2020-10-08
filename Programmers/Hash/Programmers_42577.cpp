@@ -32,7 +32,10 @@ bool solution(vector<string> phone_book) {
         
         unsigned long point = phone_book[i + 1].find(phone_book[i]);
         if (point == 0)
+        {
             answer = false;
+            break; // 접두어가 발견됐을 때 뒤의 것들은 비교할 필요 없으므로 break를 추가하면 시간을 더 단축할 수 있을듯?
+        }
     }
     
     return answer;
