@@ -17,8 +17,10 @@ using namespace std;
 int solution(vector<vector<string>> clothes) {
     int answer = 0;
     
+    // unordered_map을 사용해 옷의 종류와 개수를 담는 맵을 생성한다.
     unordered_map<string, int> clothesMap;
     
+    // 옷의 종류와 개수를 map에 삽입
     for (int i = 0; i < clothes.size(); i++)
     {
         string key = clothes[i][1];
@@ -30,6 +32,7 @@ int solution(vector<vector<string>> clothes) {
             clothesMap[key]++;
     }
     
+    // 이 부분에 오류가 있는듯하다,,
     int multi = 1;
     int count = 0;
     
