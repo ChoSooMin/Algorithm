@@ -15,7 +15,7 @@
 using namespace std;
 
 int solution(vector<vector<string>> clothes) {
-    int answer = 0;
+    int answer = 1; // 추후에 answer값에 *를 하기 위해 1로 초기화한다.
     
     // unordered_map을 사용해 옷의 종류와 개수를 담는 맵을 생성한다.
     unordered_map<string, int> clothesMap;
@@ -24,28 +24,18 @@ int solution(vector<vector<string>> clothes) {
     for (int i = 0; i < clothes.size(); i++)
     {
         string key = clothes[i][1];
-        string value = clothes[i][0];
         
-        if (clothesMap.end() == clothesMap.find(key))
-            clothesMap.insert(make_pair(key, 1));
-        else
-            clothesMap[key]++;
+        clothesMap[key]++;
     }
     
-    // 이 부분에 오류가 있는듯하다,,
-    int multi = 1;
-    int count = 0;
-    
-    for (auto current : clothesMap)
-    {
-        cout << current.first << " " << current.second << endl;
-        count++;
-        answer += current.second;
-        multi *= current.second;
-    }
-    
-    if (count != 1)
-        answer += multi;
+    /**
+     머리부분이 3개고, 눈부분이 2개라면
+     ([머리] 입을 수 있는 경우 3가지 + 아무것도 안입는 경우 1가지) * ([눈] 입을 수 있는 경우 2가지 + 아무것도 안입는 경우 1가지) - 아무것도 안입는 경우 1가지
+     를 해줘야 제대로 된 답이 나온다. (적어도 무언가 하나는 써야된다고 했으므로)
+     */
+    for (auto it = clothesMap.begin(); it != clothesMap.end(); it++) // map for-loop
+        answer *= (it -> second + 1);
+    answer--; // 아무것도 안 입는 경우 1가지
     
     return answer;
 }
