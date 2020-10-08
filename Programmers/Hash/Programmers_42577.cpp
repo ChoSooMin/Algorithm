@@ -18,21 +18,21 @@ using namespace std;
 bool solution(vector<string> phone_book) {
     bool answer = true;
     
-    // for문을 사용해서 하나씩 다 탐색하는건 너무 시간이 오래 걸린다,,
+    // 정렬한 후
+    sort(phone_book.begin(), phone_book.end());
+    
+    /**
+     순서대로 현재 위치의 값을 뒤의 값에서 find함수를 사용해 찾는다.
+     만약 찾은 위치가 0이라면 현재 값이 뒤의 값의 접두어라는 뜻이므로 answer를 false로 바꿔준다.
+     */
     for (int i = 0; i < phone_book.size(); i++)
     {
-        for (int j = 0; j < phone_book.size(); j++)
-        {
-            if (i == j)
-                continue;
-            
-            int pos = phone_book[j].find(phone_book[i]);
-            if (pos < phone_book.size())
-            {
-                answer = false;
-                break;
-            }
-        }
+        if (i == phone_book.size() - 1)
+            break;
+        
+        unsigned long point = phone_book[i + 1].find(phone_book[i]);
+        if (point == 0)
+            answer = false;
     }
     
     return answer;
