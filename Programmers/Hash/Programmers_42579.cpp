@@ -68,13 +68,6 @@ vector<int> solution(vector<string> genres, vector<int> plays)
     vector<pair<Music, int>> vecvec(m.begin(), m.end());
     sort(vecvec.begin(), vecvec.end(), cmp2);
     
-    for (auto elem : vecvec)
-    {
-        cout << elem.first.genreName << " " << elem.first.genreIndex << " : " << elem.second << endl;;
-    }
-    
-    cout << vec[0].first << " " << vec[1].first << endl;
-    
     int count = 0;
     
     for (int i = 0; i < vec.size(); i++)
