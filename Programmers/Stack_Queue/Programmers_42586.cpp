@@ -16,9 +16,9 @@ using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds)
 {
-    vector<int> answer(progresses.size());
+    vector<int> answer;
     
-    vector<int> time;
+    vector<int> time; // 각 작업이 끝나는 시간을 저장한 벡터
     
     for (int i = 0; i < progresses.size(); i++)
     {
@@ -40,6 +40,13 @@ vector<int> solution(vector<int> progresses, vector<int> speeds)
             max = time[i];
             answer.push_back(count);
             count = 1;
+            
+            if (i == time.size() - 1)
+                answer.push_back(count);
+        }
+        else if (i == time.size() - 1)
+        {
+            answer.push_back(count);
         }
         else
         {
