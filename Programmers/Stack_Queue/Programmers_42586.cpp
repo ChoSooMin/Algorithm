@@ -16,14 +16,57 @@ using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds)
 {
-    vector<int> answer;
+    vector<int> answer(progresses.size());
     
+    vector<int> time;
+    
+    for (int i = 0; i < progresses.size(); i++)
+    {
+        int remain = 100 - progresses[i];
+        int multi = remain / speeds[i];
+        
+        if (remain % speeds[i] != 0)
+            multi += 1;
+        
+        time.push_back(multi);
+    }
+    
+    int max = time[0];
+    int count = 1;
+    for (int i = 0; i < time.size(); i++)
+    {
+        if (time[i] > max)
+        {
+            max = time[i];
+            answer.push_back(count);
+            count = 1;
+        }
+        else
+        {
+            count++;
+        }
+    }
     
     return answer;
 }
 
 int main()
 {
+    vector<int> progresses1 = { 93, 30, 55 };
+    vector<int> speeds1 = { 1, 30, 5 };
+    
+    vector<int> s1 = solution(progresses1, speeds1);
+    
+    for (int elem : s1)
+        cout << elem << " " << endl;
+    
+//    vector<int> progresses2 = { 95, 90, 99, 99, 80, 99 };
+//    vector<int> speeds2 = { 1, 1, 1, 1, 1, 1 };
+//
+//    vector<int> s2 = solution(progresses2, speeds2);
+//
+//    for (int elem : s2)
+//        cout << elem << " " << endl;
     
     return 0;
 }
