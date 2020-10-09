@@ -32,24 +32,40 @@ vector<int> solution(vector<int> progresses, vector<int> speeds)
     }
     
     int max = time[0];
+    int maxIndex = 0;
     int count = 1;
     for (int i = 0; i < time.size(); i++)
     {
+        if (i != maxIndex)
+            continue;
+        
         for (int j = i + 1; j < time.size(); j++)
         {
-            if (time[j] > max) // 뒤에 있는 값이 현재 max 값보다 클 경우
+            if (j == time.size() - 1 && time[j] > max)
+            {
+                answer.push_back(count);
+                answer.push_back(1);
+            }
+            else if (j == time.size() - 1 && time[j] < max)
+            {
+                answer.push_back(count + 1);
+            }
+            else if (time[j] > max) // 뒤에 있는 값이 현재 max 값보다 클 경우
             {
                 answer.push_back(count);
                 max = time[j]; // max 값을 time[j]로 바꾼 후
+                maxIndex = j;
                 count = 1;
+                
                 
                 if (j == time.size() - 1)
                     answer.push_back(count);
                 break; // break를 한다.
             }
-            
-            // 아니라면
-            count++; // count에 1을 더해주고 계속,,
+            else // 아니라면
+            {
+                count++; // count에 1을 더해주고 계속
+            }
         }
     }
     
@@ -65,6 +81,8 @@ int main()
     
     for (int elem : s1)
         cout << elem << " " << endl;
+    
+    cout << endl;
     
     vector<int> progresses2 = { 95, 90, 99, 99, 80, 99 };
     vector<int> speeds2 = { 1, 1, 1, 1, 1, 1 };
