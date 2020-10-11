@@ -50,6 +50,12 @@ int solution(int bridge_length, int weight, vector<int> truck_weights)
         auto cur = bridgeQ.front();
         if (cur.second == bridge_length)
             bridgeQ.pop(); // pop하고
+        
+
+        /**
+         큐는 특정 위치의 값을 수정할 수 없는데 ,, 큐 말고 다른걸 써야하나 ,,?ㅠ
+         */
+        
         else
         {
             for (int i = 0; i < bridgeQ.size(); i++)
