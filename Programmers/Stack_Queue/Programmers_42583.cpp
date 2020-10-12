@@ -15,6 +15,12 @@
 
 using namespace std;
 
+/**
+ 예은 풀이 : head랑 tail을 만들어 사용 (queue)
+ queue에서 tail은 마지막을 가리키는 게 아니라 마지막 인덱스 - 1을 가리킨다.
+ 처음에는 head = tail = 0으로 초기화해 아무것도 없다고 표시
+ answer는 반복문이 실행될 때마다 +1 되어야 한다.
+ */
 int solution(int bridge_length, int weight, vector<int> truck_weights)
 {
     int answer = 0;
