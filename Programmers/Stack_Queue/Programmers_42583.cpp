@@ -15,71 +15,64 @@
 
 using namespace std;
 
-/**
- 예은 풀이 : head랑 tail을 만들어 사용 (queue)
- queue에서 tail은 마지막을 가리키는 게 아니라 마지막 인덱스 - 1을 가리킨다.
- 처음에는 head = tail = 0으로 초기화해 아무것도 없다고 표시
- answer는 반복문이 실행될 때마다 +1 되어야 한다.
- */
 int solution(int bridge_length, int weight, vector<int> truck_weights)
 {
     int answer = 0;
+    int currentWeight = 0; // 현재 도로에 올라가져있는 차 무게
+    queue<int> onBridgeCar, remainDistance; // 도로에 올라가져있는 차, 차마다 남은 거리
     
-    // truck_weights.size()만큼의 트럭 수가 있다.
-    // truck_weights[i]는 각 bridge_length번 있어야한다?
-    queue<int> standbyQ; // 대기 중인 트럭들의 index를 저장하는 큐
-    for (int i = 0; i < truck_weights.size(); i++)
+    while (true)
     {
-        standbyQ.push(i);
-    }
-    
-    queue<pair<int, int>> bridgeQ; // 다리 위에 몇 번 트럭이 얼마나 있는지 저장하는 큐 <1, 1>이라면 1번 트럭이 1초동안 큐에 있었다는 뜻
-    int curWeight = 0; // 다리 위에 있는 트럭들의 무게의 합
-    int i = standbyQ.front();
-    
-    // 먼저 대기중인 트럭 중 맨 처음 트럭이 진입
-    bridgeQ.push(make_pair(i, 1));
-    curWeight += truck_weights[i];
-    int time = 1;
-    standbyQ.pop();
-    i = standbyQ.front();
-    /**
-     0초일 때는 다리 위에 아무것도 없다.
-     1초일 때
-     다리 길이만큼 트럭의 개수가 진입할 수 있다. 진입한 트럭의 개수 = q.size()
-     &&
-     진입한 트럭 앞에서부터의 합이 weight를 넘지 않는 선에서 진입 가능
-     */
-    while (!bridgeQ.empty() && !standbyQ.empty()) // 다리를 건너고 있는 트럭과 대기 트럭이 아무것도 없으면 모든 트럭이 다 건넌 것이므로 반복문이 끝나고 마지막 time값이 answer가 된다.
-    {
-        // 큐의 맨 앞의 second값이 bridge_length만큼 큐에 있었다면 다리를 다 건넜다는 뜻이므로
-        auto cur = bridgeQ.front();
-        if (cur.second == bridge_length)
-            bridgeQ.pop(); // pop하고
-        
-
         /**
-         큐는 특정 위치의 값을 수정할 수 없는데 ,, 큐 말고 다른걸 써야하나 ,,?ㅠ
+         도로 위에 올라간 차들이 각각 얼마나 더 움직여야 도로를 건너는지를 저장하는 remainDistance 큐에 접근
          */
-        
-        else
+        // 중간에 차가 빠져나가면 계산이 바뀌기 때문에 size 고정
+        int size = remainDistance.size();
+        // 맨 처음에는 이 for문을 돌리지 않는다.
+        for (int i = 0; i < size; i++)
         {
-            for (int i = 0; i < bridgeQ.size(); i++)
+            int length = remainDistance.front();
+            remainDistance.pop();
+            
+            // 도로에 남은 길이가 없다면
+            if (length <= 1)
             {
+                // 도로에서 현재차 무게를 제외
+                currentWeight -= onBridgeCar.front();
                 
+                // 도로에 올라가져 있는 차 제외
+                onBridgeCar.pop();
+                continue;
             }
+            
+            // 남아있다면 길이 감소 후 다시 넣기
+            remainDistance.push(length - 1);
         }
         
-        if ((bridgeQ.size() < bridge_length) && (curWeight + truck_weights[i] <= weight))
+        /**
+         대기 중인 차가 1대 이상 있고, 그 차가 도로에 진입했을 때 무게를 견딜 수 있다면
+         해당 차를 도로에 진입하고, currentWeight에 차의 무게를 더해준다.
+         그리고 대기 큐에서 해당 차를 삭제한다.
+         */
+        // 벡터에 접근할 때는 .at으로 사용하는게 official !!
+        // 대기큐에 차가 1대 이상 있고 도로가 무게를 견딜 수 있다면
+        if (truck_weights.size() > 0 && currentWeight + truck_weights.at(0) <= weight)
         {
-            
+            // 도로에 올라가져있는 차 추가
+            onBridgeCar.push(truck_weights.at(0));
+            // 현재 올라가져있는 무게 추가
+            currentWeight += truck_weights.at(0);
+            // 남은 도로거리 추가
+            remainDistance.push(bridge_length);
+            // 대기차량 삭제
+            truck_weights.erase(truck_weights.begin()); // vector의 원소를 삭제하는 것은 erase !!
         }
-        else
-        {
-            
-        }
+        // 시간초 증가
+        answer++;
         
-        time++;
+        // 도로에 올라가져있는 차와 대기 차가 모두 없다면 반복문 탈출
+        if (onBridgeCar.size() == 0 && truck_weights.size() == 0)
+            break;
     }
     
     return answer;
