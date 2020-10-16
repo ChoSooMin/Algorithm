@@ -17,5 +17,14 @@ int soluton(vector<vector<int>> jobs)
 {
     int answer = 0;
     
+    
+    
     return answer;
+}
+
+int main()
+{
+    
+    
+    return 0;
 }
