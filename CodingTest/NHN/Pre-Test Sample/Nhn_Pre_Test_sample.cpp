@@ -84,6 +84,7 @@ void BFS() {
             }
             
             // (i, j)를 시작점으로 하는 BFS가 종료
+            areaSize--;
             areaQ.push(areaSize); // areaSize를 영역 큐에 넣어준다.
         }
     }
