@@ -86,7 +86,7 @@ int getCycleNum(int size, vector<int> nums) {
 //                cout << i << " : true" << " ";
             }
         }
-//        cout << endl;
+        cout << endl;
         
         if (isTrue == true) {
             break;
@@ -119,7 +119,7 @@ int getCycleNum(int size, vector<int> nums) {
             
         }
         
-//        cout << "answer : " << answer << endl;
+        cout << "answer : " << answer << endl;
     }
     answer++; // 왜인지 마지막 턴은 +1을 안한다,,
     
