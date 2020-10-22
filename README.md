@@ -1,2 +1,2 @@
 # Algorithm
-<img src="algorithm.png" />
+<img src="algorithm.png" width=300/>
