@@ -67,23 +67,14 @@ int getCycleNum(int size, vector<int> nums) {
     bool turnEnd = false;
     
     while (true) {
-//        for (int i = 0; i < check.size(); i++) {
-//            cout << i << " : " << (check.at(i) ? "true" : "false") << " ";
-//        }
-        
-        for (int i = 0; i < check.size(); i++) {
-            
-            
+        for (int i = 0; i < check.size(); i++)
             if (check.at(i) == false) { // 하나라도 체크하지 않았으면
                 noneIndex = i;
                 isTrue = false; // isTrue를 false로 바꾼다. (true일 때 while문이 끝남)
-                
-//                cout << i << " : false" << " ";
-                break;
+                break; // 계속 하면 noneIndex가 가장 뒤의 인덱스로 바뀐다.
             }
             else {
                 isTrue = true;
-//                cout << i << " : true" << " ";
             }
         }
         cout << endl;
@@ -91,12 +82,11 @@ int getCycleNum(int size, vector<int> nums) {
         if (isTrue == true) {
             break;
         }
-//        cout << "noneINdex : " << noneIndex << endl;
         
         /**
          isTrue가 false라는 뜻 (다 돌지 않았다)
          */
-        if (Q.empty() && noneIndex != -1) { // 큐가 비어있을 때 (하나으 ㅣ사이클이 끝)
+        if (Q.empty() && noneIndex != -1) { // 큐가 비어있을 때 (하나의 사이클이 끝)
             check.at(noneIndex) = true;
             Q.push(noneIndex);
             continue;
@@ -131,15 +121,7 @@ int main() {
 
     for (int i = 0; i < N.size(); i++) {
         cout << getCycleNum(N.at(i), numbers.at(i)) << endl;
-//        cout << N.at(i) << endl;
-//
-//        for (int j = 0; j < numbers.at(i).size(); j++) {
-//            cout << numbers.at(i).at(j) << " ";
-//        }
-//        cout << endl;
     }
-    
-//    cout << getCycleNum(10, { 1, 0, 2, 3, 4, 5, 6, 8, 9, 7 });
     
     return 0;
 }
