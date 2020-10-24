@@ -42,27 +42,23 @@ void solution(int day, int width, int **blocks) {
     
     int getCimentCount = 0;
     
-    // 벽돌에서 왼쪽과 오른쪽의 최댓값을 찾아 시멘트를 붓는다. (day만큼 반복)
-    for (int j = 0; j < width; j++) {
-        if (j < width - 1) {
-            // 시멘트 영역 구하기
-            int leftIndex = getMaxIndex(0, j, blockVector); // 왼쪽 최댓값의 인덱스
-            int rightIndex = getMaxIndex(j + 1, width - 1, blockVector); // 오른쪽 최댓값의 인덱스
-            
-            int minIndex = leftIndex;
-            if (blockVector.at(leftIndex) > blockVector.at(rightIndex)) {
-                minIndex = rightIndex;
-            }
-            
-            int minBlock = blockVector.at(minIndex);
-            
-            for (int k = leftIndex + 1; k <= rightIndex - 1; k++) {
-                int ciment = minBlock - blockVector.at(k);
-                getCimentCount += ciment;
-            }
-        }
-        
+    int leftIndex = 0;
+    int rightIndex = blockVector.size() - 1;
+    
+    
+    if (blockVector.at(leftIndex) < blockVector.at(leftIndex + 1)) {
+        leftIndex = leftIndex + 1;
     }
+    int rightMax = blockVector.at(rightIndex);
+    for (int j = blockVector.size() - 1; j > leftIndex; j--) {
+        if (blockVector.at(j) >= rightMax) {
+            rightIndex = j;
+            rightMax = blockVector.at(j);
+        }
+    }
+    
+    cout << "left : " << leftIndex << " / ";
+    cout << "right : " << rightIndex << endl;
 }
 
 struct input_data {
