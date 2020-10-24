@@ -32,6 +32,7 @@ void solution(int numOfAllPlayers, int numOfQuickPlayers, char *namesOfQuickPlay
     while (numOfGames != 0) { // 게임 진행
         
         
+        
         numOfGames--; // 한 게임이 끝날 때마다 -1
     }
 }
