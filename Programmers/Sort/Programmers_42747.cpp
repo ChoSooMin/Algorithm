@@ -17,12 +17,23 @@ using namespace std;
 int solution(vector<int> citations) {
     int answer = 0;
     
+    /**
+     3, 0, 6, 1, 5
+     sort
+     6, 5, 3, 1, 0
+     */
+    sort(citations.begin(), citations.end(), greater<>()); // 벡터 내림차순 정렬을 greater<>() 사용
+    int upperCount = 0;
+    int lowerCount = 0;
+    for (int i = 0; i < citations.size(); i++) {
+        int curNum = citations.at(i);
+    }
     
     return answer;
 }
 
 int main() {
-    
+    solution({ 3, 0, 6, 1, 5 });
     
     return 0;
 }
