@@ -6,6 +6,7 @@
 //  Copyright © 2020 조수민. All rights reserved.
 //
 //  H-index(https://programmers.co.kr/learn/courses/30/lessons/42747)
+//  [참고] https://m.blog.naver.com/PostView.nhn?blogId=promarketyj&logNo=221434899288&categoryNo=22&proxyReferer=https:%2F%2Fwww.google.com%2F
 
 #include <stdio.h>
 #include <iostream>
