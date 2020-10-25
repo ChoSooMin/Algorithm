@@ -16,12 +16,17 @@
 using namespace std;
 
 /**
- int형 벡터를 string으로 바꿔서 내림차순 정렬 후,
- 앞에서부터 붙인다
+ cmp 함수를 만들어 정렬해준다!!
+ 이 때 비교는 string 형으로 한다.
  */
+bool cmp(const string &a, const string &b) {
+    return a + b > b + a;
+}
+
 string solution(vector<int> numbers) {
     string answer = "";
     
+    // int형 벡터 numbers를 string형으로 바꿔 넣는다.
     vector<string> stringVector;
     for (int i = 0; i < numbers.size(); i++) {
         string s = to_string(numbers.at(i));
@@ -29,34 +34,18 @@ string solution(vector<int> numbers) {
         stringVector.push_back(s);
     }
     
-    // sort
-    sort(stringVector.begin(), stringVector.end(), greater<string>()); // 내림차순 정렬 : greater 사용
+    /**
+     sort 함수를 사용한다.
+     이때, 마지막 인자에 비교 함수를 넣으면 그 함수 기준으로 정렬을 수행한다!!
+     */
+    sort(stringVector.begin(), stringVector.end(), cmp);
+    
     for (int i = 0; i < stringVector.size(); i++) {
-        /**
-         문제)
-         2 10 1 로 정렬될 경우,
-         2101보다 2110이 더 크다. -> 어떻게 비교?
-         (string형) a+b값과 b+a 값을 비교하여 sort해준다.
-         */
-        if (i != stringVector.size() - 1) {
-            string curStr = stringVector.at(i);
-            string nextStr = stringVector.at(i + 1);
-            
-            if (curStr.at(0) == nextStr.at(0)) {
-                int a = stoi(curStr + nextStr);
-                int b = stoi(nextStr + curStr);
-                
-                if (a < b) {
-                    // 현재와 뒤의 값을 바꿔준다.
-                    stringVector.at(i) = nextStr;
-                    stringVector.at(i + 1) = curStr;
-                }
-            }
-        }
-        
         string cur = stringVector.at(i);
         answer += cur;
     }
+    
+    if (answer[0] == '0') return "0"; // answer[0]이 0이면 가장 큰 수가 0이라는 뜻이므로 0을 리턴한다.
     
     return answer;
 }
