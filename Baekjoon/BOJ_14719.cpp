@@ -12,7 +12,10 @@
 
 using namespace std;
 
+int H, W;
+
 int main() {
+    
     
     return 0;
 }
