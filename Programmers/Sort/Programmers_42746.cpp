@@ -36,6 +36,7 @@ string solution(vector<int> numbers) {
          문제)
          2 10 1 로 정렬될 경우,
          2101보다 2110이 더 크다. -> 어떻게 비교?
+         (string형) a+b값과 b+a 값을 비교하여 sort해준다.
          */
         if (i != stringVector.size() - 1) {
             string curStr = stringVector.at(i);
