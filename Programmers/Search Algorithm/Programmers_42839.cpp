@@ -9,19 +9,77 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <math.h>
 #include <string>
 #include <vector>
 
 using namespace std;
 
+int numbersLength;
+vector<string> newNums;
+
+// 소수 판별 함수
+bool isPrime(int n) {
+    if (n <= 1)
+        return false;
+    
+    for (int i = 2; i < sqrt(n); i++) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+void dfs(int index, string num, vector<bool> visited, char char_array[]) {
+    string newNum = num;
+  
+    for (int i = 0; i < numbersLength; i++) {
+        if (visited.at(i) == true) {
+            continue;
+        }
+        
+        newNum += char_array[i]; // 아직 방문하지 않은 곳의
+        visited.at(i) = true;
+        
+        if (newNum.size() == numbersLength) {
+            cout << "새로운 숫자! " << newNum << endl;
+            break;
+        }
+        else {
+            dfs(i, newNum, visited, char_array);
+        }
+    }
+}
+
 int solution(string numbers) {
     int answer = 0;
+    
+    numbersLength = numbers.length();
+    char char_array[numbersLength + 1];
+    strcpy(char_array, numbers.c_str());
+    
+    for (int i = 0; i < numbersLength; i++) {
+        char current = char_array[i];
+        
+        vector<bool> isVisited;
+        isVisited.resize(numbersLength);
+        
+        for (int j = 0; j < isVisited.size(); j++) {
+            isVisited.at(j) = false;
+        }
+        
+        string charToStr(1, current);
+        isVisited.at(i) = true;
+        dfs(i, charToStr, isVisited, char_array);
+    }
     
     return answer;
 }
 
 int main() {
-    
+    solution("012");
     
     return 0;
 }
