@@ -17,6 +17,7 @@ using namespace std;
 
 int numbersLength;
 vector<string> newNums;
+vector<bool> visited;
 
 // 소수 판별 함수
 bool isPrime(int n) {
@@ -32,7 +33,7 @@ bool isPrime(int n) {
     return true;
 }
 
-void dfs(int index, string num, vector<bool> visited, char char_array[]) {
+void dfs(int index, string num, char char_array[]) {
     string newNum = num;
   
     for (int i = 0; i < numbersLength; i++) {
@@ -48,7 +49,7 @@ void dfs(int index, string num, vector<bool> visited, char char_array[]) {
             break;
         }
         else {
-            dfs(i, newNum, visited, char_array);
+            dfs(i, newNum, char_array);
         }
     }
 }
@@ -63,16 +64,12 @@ int solution(string numbers) {
     for (int i = 0; i < numbersLength; i++) {
         char current = char_array[i];
         
-        vector<bool> isVisited;
-        isVisited.resize(numbersLength);
-        
-        for (int j = 0; j < isVisited.size(); j++) {
-            isVisited.at(j) = false;
-        }
+        visited.resize(numbersLength);
+        fill(visited.begin(), visited.end(), false); // visited 초기화(false)
         
         string charToStr(1, current);
-        isVisited.at(i) = true;
-        dfs(i, charToStr, isVisited, char_array);
+        visited.at(i) = true;
+        dfs(i, charToStr, char_array);
     }
     
     return answer;
