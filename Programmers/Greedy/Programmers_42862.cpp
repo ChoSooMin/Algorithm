@@ -19,33 +19,25 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     int answer = 0;
     
     map<int, int> students;
-    
-//    map<int, int> lostStudents;
+
+    // 도난당한 애들
     for (int i = 0; i < lost.size(); i++) {
-//        lostStudents.insert(make_pair(lost.at(i), 1));
         students.insert(make_pair(lost.at(i), 0)); // 도난
     }
     
-    //
+    // 여분이 있는 애들
     for (int i = 0; i < reserve.size(); i++) {
         students.insert(make_pair(reserve.at(i), 2)); // 여분이 있는 경우
-//        int cur = reserve.at(i);
-//        int curBefore = cur - 1;
-//        int curAfter = cur + 1;
-        
-        // 존재하면?
-//        if (lostStudents.find(curBefore) -> second
-//            == 1 || lostStudents.find(curAfter) -> second) {
-//
-//        }
     }
     
+    // 여분 X, 도난도 X (1개만 있는 경우)
     for (int i = 1; i <= n; i++) {
         if (students.find(i)->second != 0 || students.find(i)->second != 2) {
             students.insert(make_pair(i, 1));
         }
     }
-    // 여분이 있는 애들ㄹ
+    
+    // 여분이 있는 애들 앞 뒤를 봐서 도난 당한 애들이 있는지 확인
     for (int i = 0; i < reserve.size(); i++) {
         int cur = reserve.at(i);
         int curBefore = cur - 1;
