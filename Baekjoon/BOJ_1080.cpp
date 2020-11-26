@@ -15,11 +15,19 @@
 using namespace std;
 
 vector<vector<int>> matrixA, matrixB;
+int answer = 0;
+int N, M;
+
+void change(int y, int x) {
+    for (int i = y; i < y + 3; i++) {
+        for (int j = x; j < x + 3; j++) {
+            matrixA.at(i).at(j) = 1 - matrixA.at(i).at(j);
+        }
+    }
+}
 
 void input() {
     // input
-    int N, M;
-    
     cin >> N >> M;
     
     matrixA.resize(N);
@@ -49,7 +57,29 @@ void input() {
 }
 
 int main() {
+    input();
     
+    // 3 * 3 행렬로 바뀌므로 i와 j는 각각 N - 3, M - 3까지
+    for (int i = 0; i < N - 2; i++) {
+        for (int j = 0; j < M - 2; j++) {
+            if (matrixA.at(i).at(j) != matrixB.at(i).at(j)) { // 다르면 연산을 해준다.
+                answer++;
+                change(i, j);
+            }
+        }
+    }
+    
+    // 연산 이후
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (matrixA.at(i).at(j) != matrixB.at(i).at(j)) { // 다른 값이 나왔다면 연산을 아무리 해도 같아질 수 없으므로 -1을 출력
+                cout << -1;
+                return 0;
+            }
+        }
+    }
+    
+    cout << answer;
     
     return 0;
 }
