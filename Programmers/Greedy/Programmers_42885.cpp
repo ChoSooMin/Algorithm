@@ -6,6 +6,7 @@
 //  Copyright © 2020 조수민. All rights reserved.
 //
 //  구명보트(https://programmers.co.kr/learn/courses/30/lessons/42885)
+//  참고(https://mungto.tistory.com/46)
 
 #include <stdio.h>
 #include <iostream>
