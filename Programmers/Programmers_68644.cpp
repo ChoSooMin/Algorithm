@@ -5,7 +5,7 @@
 //  Created by 조수민 on 2020/12/01.
 //  Copyright © 2020 조수민. All rights reserved.
 //
-//  두 개 뽑아서 더하기(https://programmers.co.kr/learn/courses/30/lessons/68644?language=cpp)
+//  두 개 뽑아서 더하기(https://programmers.co.kr/learn/courses/30/lessons/68644)
 
 #include <stdio.h>
 #include <iostream>
