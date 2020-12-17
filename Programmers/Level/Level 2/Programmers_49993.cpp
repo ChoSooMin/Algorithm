@@ -15,51 +15,34 @@
 
 using namespace std;
 
-bool isOkay(string skill, string skillTree) {
-    bool ans = false;
-    
-    vector<int> positions;
-    
-    for (int i = 0; i < skillTree.length(); i++) {
-        char curSkill = skillTree[i];
-
-        if (skill.find(curSkill) != string::npos) {
-            int pos = skill.find(curSkill);
-            
-            positions.push_back(pos);
-        }
-    }
-    
-    if (positions.size() != 0) {
-        vector<int>::iterator iter;
-        iter = find(positions.begin(), positions.end(), 0);
-        if (iter == positions.end())
-            return false;
-    }
-    
-    vector<int> beforePositions;
-    beforePositions.assign(positions.begin(), positions.end());
-    sort(positions.begin(), positions.end());
-    
-    if (positions == beforePositions) {
-        ans = true;
-    }
-    
-    return ans;
-}
-
 int solution(string skill, vector<string> skill_trees) {
     int answer = 0;
-    
-    for (int i = 0; i < skill_trees.size(); i++) {
-        string curSkillTree = skill_trees.at(i);
-
-        if (isOkay(skill, curSkillTree)) {
-            answer++;
+        
+        // 모든 경우의 스킬트리 검색
+        for(int i = 0; i < skill_trees.size(); i++) {
+            vector <int> temp;
+            // skill_trees 중에 skill에 없는 skill을 제외하고 temp에 저장
+            for(int j = 0; j < skill_trees[i].size(); j++) { // skill_tress[i] = string
+                for(int k = 0; k < skill.size(); k++) {
+                    if(skill[k] == skill_trees[i][j]) {
+                        temp.push_back(skill_trees[i][j]);
+                    }
+                }
+            }
+            // temp의 길이만큼 skill을 비교하여 순서가 일치하는지 확인
+            int flag = 0;
+            for(int j = 0; j < temp.size(); j++) {
+                if(temp[j] != skill[j]) {
+                    flag = 1;
+                    break;
+                }
+            }
+            // 일치하면 answer값 1증가
+            if(flag == 0) {
+                answer++;
+            }
         }
-    }
-    
-    return answer;
+        return answer;
 }
 
 int main() {
