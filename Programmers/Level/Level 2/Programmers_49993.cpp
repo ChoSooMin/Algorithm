@@ -17,32 +17,32 @@ using namespace std;
 
 int solution(string skill, vector<string> skill_trees) {
     int answer = 0;
+    
+    // 스킬트리에 있는 스킬들이 스킬 순서에 있는지 확인하고, 있으면 skillVector에 넣어준다.
+    for (int i = 0; i < skill_trees.size(); i++) {
+        vector<char> skillVector;
         
-        // 모든 경우의 스킬트리 검색
-        for(int i = 0; i < skill_trees.size(); i++) {
-            vector <int> temp;
-            // skill_trees 중에 skill에 없는 skill을 제외하고 temp에 저장
-            for(int j = 0; j < skill_trees[i].size(); j++) { // skill_tress[i] = string
-                for(int k = 0; k < skill.size(); k++) {
-                    if(skill[k] == skill_trees[i][j]) {
-                        temp.push_back(skill_trees[i][j]);
-                    }
+        for (int k = 0; k < skill_trees[i].size(); k++) {
+            for (int j = 0; j < skill.size(); j++) {
+                if (skill[j] == skill_trees[i][k]) {
+                    char cur = skill[j];
+                    skillVector.push_back(cur);
                 }
-            }
-            // temp의 길이만큼 skill을 비교하여 순서가 일치하는지 확인
-            int flag = 0;
-            for(int j = 0; j < temp.size(); j++) {
-                if(temp[j] != skill[j]) {
-                    flag = 1;
-                    break;
-                }
-            }
-            // 일치하면 answer값 1증가
-            if(flag == 0) {
-                answer++;
             }
         }
-        return answer;
+        
+        bool check = true;
+        for (int c = 0; c < skillVector.size(); c++) { // skillVector와 skill의 순서를 비교한다.
+            if (skill[c] != skillVector[c]) { // 순서가 다를 경우, 해당 스킬 트리는 불가능한 스킬 트리이므로 check를 false로 바꿔준다.
+                check = false;
+            }
+        }
+        
+        if (check)
+            answer++;
+    }
+    
+    return answer;
 }
 
 int main() {
