@@ -12,40 +12,30 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 
 int solution(int n) {
     int answer = 0;
+    vector<int> v;
     
-    string third = "";
-    
-    int division = 100; // 몫
-    int remainder = -1; // 나머지
-    
-    while (division >= 3) { // 몫이 3보다 크거나 같은 동안 계속 반복
-        division = n / 3; // 3으로 나눈 몫
-        remainder = n % 3; // 3으로 나눈 나머지
-        
-        third += to_string(remainder); // 이렇게 넣으면 뒤집을 필요 없음 (애초에 반전이 되어서 들어간다)
-        n = division;
+    while (n) {
+        v.push_back(n % 3);
+        n /= 3;
     }
     
-    third += to_string(division); // 마지막 몫도 추가해준다
+    reverse(v.begin(), v.end());
     
-    for (int i = 0; i < third.length(); i++) {
-        int curNum = third[i] - '0';
-        int powNum = third.length() - i - 1;
-        
-        answer += curNum * pow(3, powNum);
+    for (int i = 0; i < v.size(); i++) {
+        answer += pow(3, i) * v.at(i);
     }
-    
     
     return answer;
 }
 
 int main() {
-    cout << solution(45) << endl;
+    cout << solution(3) << endl;
     
     return 0;
 }
