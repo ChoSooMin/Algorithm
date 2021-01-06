@@ -19,7 +19,27 @@ vector<vector<bool>> isVisited;
 // 상하좌우 움직이기 위한 배열
 int dx[4];
 int dy[4];
+vector<vector<int>> vec;
+int area; // 한 영역의 크기
+int M, N;
 
+void dfs(int x, int y, int color) {
+    isVisited.at(x).at(y) = true;
+    area++;
+    
+    for (int i = 0; i < 4; i++) {
+        int nextX = x + dx[i];
+        int nextY = y + dy[i];
+        
+        if (nextX < 0 || nextY < 0 || nextX >= M || nextY >= N) // 범위를 벗어나면 다음으로
+            continue;
+        
+        // 아직 방문하지 않은 곳이고, 현재 위치의 색상과 같으면 재귀
+        if (!isVisited.at(nextX).at(nextY) && (vec.at(nextX).at(nextY) == color)) {
+            dfs(nextX, nextY, color);
+        }
+    }
+}
 
 // 전역 변수를 정의할 경우 함수 내에 초기화 코드를 꼭 작성해주세요.
 vector<int> solution(int m, int n, vector<vector<int>> picture) {
@@ -37,35 +57,24 @@ vector<int> solution(int m, int n, vector<vector<int>> picture) {
     dx[2] = -1; dy[2] = 0; // 좌
     dx[3] = 1; dy[3] = 0; // 우
     
+    area = 0;
+    M = m;
+    N = n;
+    vec = picture;
+    
     //
-    queue<pair<int, int>> Q;
-    Q.push(make_pair(0, 0));
-    while (!Q.empty()) {
-        int curX = Q.front().first;
-        int curY = Q.front().second;
-        
-        for (int i = 0; i < 4; i++) { // 움직이기
-            int nextX = curX + dx[i];
-            int nextY = curY + dy[i];
-            
-            if (nextX < 0 || nextY < 0 || nextX >= m || nextY >= n) // 범위를 벗어나면 다음으로
-                continue;
-            
-            if (isVisited.at(nextX).at(nextY)) // 이미 방문한 곳이라면 다음으로
-                continue;
-            
-            // 범위를 벗어나지 않고, 이미 방문한 곳이 아니라면?
-            Q.push(make_pair(nextX, nextY)); // 큐에 (nextX, nextY)를 넣는다.
-            isVisited.at(nextX).at(nextY) = true; // 방문했다고 표시 남기기
-            
-            if (picture.at(nextX).at(nextY) != 0) {
-                max_size_of_one_area++;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            // 현재 위치가 아직 방문하지 않은 곳이고, 색이 칠해져 있는 곳이면
+            // 새로운 영역이 시작하는 위치라고 판단
+            if (!isVisited.at(i).at(j) && (vec.at(i).at(j) > 0)) {
+                area = 0;
+                dfs(i, j, vec.at(i).at(j)); // 여기서 dfs는 재귀함수가 되므로, 만약 이 줄이 끝났다면 한 영역이 끝났다는 소리
+                number_of_area++; // 영역의 개수를 +1 한다.
+                max_size_of_one_area = max(area, max_size_of_one_area);
             }
         }
-        
-        Q.pop();
     }
-    
     
     vector<int> answer(2);
     answer[0] = number_of_area; // 몇 개의 영역이 있는지
@@ -75,6 +84,7 @@ vector<int> solution(int m, int n, vector<vector<int>> picture) {
 
 int main() {
     vector<int> sol = solution(6, 4, {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}});
+    cout << sol.at(0) << endl;
     cout << sol.at(1) << endl;
     
     return 0;
