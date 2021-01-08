@@ -24,24 +24,22 @@ int main() {
         cin >> a[i];
     }
     
-    fill_n(dp, 1000, 1); // 배열 원소 1로 초기화
-    
     // dp
     // dp[i]에는 i까지의 증가하는 부분 수열이 가장 긴 값을 담고 있다.
     // 처음부터 i - 1까지의 a[n]중, a[i]보다 작은 값들 중, dp의 max값에서 +1(현재 값 추가) 하면 될듯?
-    int ans = 1;
+    dp[0] = 1;
+    int ans = -1;
     
-    if (a[0] < a[1]) {
-        dp[1] += 1;
-    }
-    
-    for (int i = 2; i < N; i++) {
+    for (int i = 0; i < N; i++) {
+        int maxDp = 0;
+        
         for (int j = 0; j <= i - 1; j++) {
             if (a[j] < a[i]) {
-                dp[i] = max(dp[i], dp[j] + 1);
+                maxDp = max(maxDp, dp[j]);
             }
         }
         
+        dp[i] = maxDp + 1;
         ans = max(ans, dp[i]);
     }
     
