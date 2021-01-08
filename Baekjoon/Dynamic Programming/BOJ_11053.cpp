@@ -39,10 +39,9 @@ int main() {
     
     for (int i = 2; i < N; i++) {
         int maxDp = 0;
-        int curData = a[i];
         
-        for (int j = 0; j < i - 1; j++) {
-            if (a[j] < curData) {
+        for (int j = 0; j <= i - 1; j++) {
+            if (a[j] < a[i]) {
                 maxDp = max(maxDp, dp[j]);
             }
         }
@@ -51,6 +50,7 @@ int main() {
         ans = max(ans, dp[i]);
     }
     
+//    cout << "===== dp[] =====" << endl;
 //    for (int i = 0; i < N; i++) {
 //        cout << dp[i] << " ";
 //    }
