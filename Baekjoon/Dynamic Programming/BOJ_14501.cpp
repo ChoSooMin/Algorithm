@@ -13,9 +13,9 @@
 using namespace std;
 
 int N;
-int T[1500001];
-int P[1500001];
-int dp[1500001];
+int T[16];
+int P[16];
+int dp[16];
 
 int main() {
     // input
