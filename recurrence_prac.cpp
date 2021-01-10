@@ -12,6 +12,13 @@
 
 using namespace std;
 
+void func1(int n) {
+    if (n == 0) return;
+    
+    cout << n << " ";
+    func1(n - 1);
+}
+
 int recur(int n) {
     if (n == 1)
         return 1;
@@ -24,6 +31,7 @@ int main() {
     cin.tie(0);
     
     cout << recur(4) << endl;
+    func1(5);
     
     return 0;
 }
