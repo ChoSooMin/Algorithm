@@ -62,7 +62,7 @@ int main() {
             }
         }
         
-        reverse(variableName.begin(), variableName.end());
+        reverse(variableName.begin(), variableName.end()); // variableName에는 변수명이 거꾸로 들어가있으므로 reverse 해줘야 한다.
         variable += " ";
         for (int i = 0; i < variableName.size(); i++) {
             variable += variableName.at(i);
