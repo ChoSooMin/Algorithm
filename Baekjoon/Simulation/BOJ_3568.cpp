@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -41,33 +42,37 @@ int main() {
     
     vector<string> answer;
     for (int i = 1; i < splitByGap.size(); i++) {
-        string curStr = splitByGap.at(i);
-        string variable = variableType;
+        string curStr = splitByGap.at(i); // a*[]&,
+        string variable = variableType; // int&
+        vector<char> variableName;
         
-        for (int i = curStr.length() - 1; i >= 0; i--) {
-            if (curStr[i] == ';' || curStr[i] == ',' || curStr[i] == '[')
+        for (int j = curStr.length() - 1; j >= 0; j--) {
+            if (curStr[j] == ';' || curStr[j] == ',')
                 continue;
             
-            if (curStr[i] == ']') {
+            else if (curStr[j] == ']') {
                 variable += "[]";
-                continue;
+                j--; // "[]" 쌍이므로 j - 1을 한번 더 한다.
             }
-            
-            int ascii = (int)curStr[i];
-            if ((ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122)) {
-                variable += " ";
-                variable += curStr[i];
-                variable += ";";
-                answer.push_back(variable);
-                break;
+            else if (((int)curStr[j] >= 65 && (int)curStr[j] <= 90) || ((int)curStr[j] >= 97 && (int)curStr[j] <= 122)) {
+                variableName.push_back(curStr[j]);
             }
-            
-            variable += curStr[i];
+            else {
+                variable += curStr[j];
+            }
         }
+        
+        reverse(variableName.begin(), variableName.end());
+        variable += " ";
+        for (int i = 0; i < variableName.size(); i++) {
+            variable += variableName.at(i);
+        }
+        
+        answer.push_back(variable);
     }
     
     for (int i = 0; i < answer.size(); i++) {
-        cout << answer.at(i) << endl;
+        cout << answer.at(i) << ";" << endl;
     }
     
     return 0;
