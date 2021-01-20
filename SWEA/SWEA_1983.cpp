@@ -11,7 +11,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <math.h>
 
 using namespace std;
 
@@ -19,7 +18,7 @@ int main(int argc, char** argv) {
     int T;
     cin >> T;
     
-    string ans[11] = { "", "A+", "A0", "A-", "B+", "B0", "B-", "C+", "C0", "C-", "D0" };
+    string ans[10] = { "A+", "A0", "A-", "B+", "B0", "B-", "C+", "C0", "C-", "D0" };
     for (int i = 1; i <= T; i++) {
         int N, K;
         cin >> N >> K;
@@ -36,20 +35,10 @@ int main(int argc, char** argv) {
         
         sort(v.begin(), v.end(), greater<pair<double, int>>());
         
-        int sameP = round(N / 10);
         for (int j = 0; j < v.size(); j++) {
             if (v.at(j).second == K) {
-                int s = (j + 1) / sameP;
-                
-                string str = "";
-                if (s * sameP < j) {
-                    str = ans[s + 1];
-                }
-                else {
-                    str = ans[s];
-                }
-                
-                cout << "#" << i << " " << str << endl;
+                cout << "#" << i << " " << ans[(j * 10) / N] << endl;
+                break;
             }
         }
     }
