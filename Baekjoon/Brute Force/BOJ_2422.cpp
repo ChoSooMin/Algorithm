@@ -9,14 +9,14 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
+int cantMix[205][205];
+
 int main() {
     int N, M;
-    vector<pair<int, int>> cantMix;
+    int answer = 0;
     
     // input
     cin >> N >> M;
@@ -24,51 +24,24 @@ int main() {
         int first, second;
 
         cin >> first >> second;
-        cantMix.push_back({ first, second }); // 섞으면 안되는 조합의 번호쌍을 저장하는 벡터 (1, 2) (3, 4) (1, 3) 저장
-    }
-    
-    // getAnswer
-    vector<int> v;
-    for (int i = 1; i <= N; i++) {
-        v.push_back(i);
+        cantMix[first][second] = 1;
+        cantMix[second][first] = 1;
     }
     
     // 조합 구하기
-    vector<int> intd;
-    for (int i = 0; i < 3; i++) {
-        intd.push_back(1);
-    }
-    for (int i = 0; i < N - 3; i++) {
-        intd.push_back(0);
-    }
-    
-    sort(intd.begin(), intd.end());
-    
-    int answer = 0;
-    do {
-        vector<int> combiV;
-        
-        for (int i = 0; i < intd.size(); i++) {
-            if (intd.at(i) == 1) {
-                combiV.push_back(v.at(i));
-            }
-        }
-        // -- combiV에는 조합의 경우가 들어간다.
-        
-        bool canCombi = true;
-        for (int i = 0; i < cantMix.size(); i++) {
-            int first = cantMix.at(i).first;
-            int second = cantMix.at(i).second;
+    for (int x = 1; x <= N - 2; x++) { // 조합의 첫번째 수는 N - 2 인덱스까지 가능
+        for (int y = x + 1; y <= N - 1; y++) {
+            if (cantMix[x][y] == 1 || cantMix[y][x] == 1) // x와 y가 조합이 불가능하면 다음으로 넘긴다
+                continue;
             
-            if ((find(combiV.begin(), combiV.end(), first) != combiV.end()) && (find(combiV.begin(), combiV.end(), second) != combiV.end())) {
-                canCombi = false; // 조합 불가능
-                break;
+            for (int z = y + 1; z <= N; z++) {
+                if (cantMix[x][z] == 1 || cantMix[y][z] == 1)
+                    continue;
+                
+                answer++;
             }
         }
-        
-        if (canCombi)
-            answer++;
-    } while(next_permutation(intd.begin(), intd.end()));
+    }
     
     cout << answer << endl;
     
