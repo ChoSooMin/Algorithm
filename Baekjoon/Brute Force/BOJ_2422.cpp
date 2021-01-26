@@ -31,7 +31,7 @@ int main() {
     // 조합 구하기
     for (int x = 1; x <= N - 2; x++) { // 조합의 첫번째 수는 N - 2 인덱스까지 가능
         for (int y = x + 1; y <= N - 1; y++) {
-            if (cantMix[x][y] == 1 || cantMix[y][x] == 1) // x와 y가 조합이 불가능하면 다음으로 넘긴다
+            if (cantMix[x][y] == 1) // x와 y가 조합이 불가능하면 다음으로 넘긴다
                 continue;
             
             for (int z = y + 1; z <= N; z++) {
