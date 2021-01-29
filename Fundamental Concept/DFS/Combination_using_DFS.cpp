@@ -37,7 +37,7 @@ void combination_DFS(int index, int count) { // count개의 수를 이용해 순
         
         visit[i] = true; // 방문 표시를 남긴다.
         combination_DFS(i, count + 1);
-        visit[i] = false;
+        visit[i] = false; // 체크 취소 (다른 자식 노드를 체크하기 위해)
     }
 }
 
