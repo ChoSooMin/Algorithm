@@ -25,7 +25,7 @@ void print_permutation() {
         cout << selected.at(i) << " ";
     }
     
-    cout << endl;
+    cout << "\n";
 }
 
 void getPermutation(int count) {
