@@ -15,7 +15,6 @@
 using namespace std;
 
 //vector<int> arr;
-vector<int> result;
 int visit[MAX]; // (!) 방문 여부를 저장하는 배열
 
 void print_combination() {
