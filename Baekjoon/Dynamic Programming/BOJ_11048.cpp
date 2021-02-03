@@ -30,22 +30,23 @@ int main() {
         }
     }
     
-    queue<pair<int, int>> Q;
+    // Queue를 사용하면 메모리 초과가 발생한다.
+    // 이유) 같은 위치를 큐에 여러번 넣고 있기 때문에, 큐의 크기가 거의 지수함수를 따라 커진다.
     dp[1][1] = a[1][1];
-    Q.push({ 1, 1 });
-    
-    while (!Q.empty()) {
-        auto cur = Q.front(); Q.pop();
-        
-        for (int dist = 0; dist < 3; dist++) {
-            int nextX = cur.first + dx[dist];
-            int nextY = cur.second + dy[dist];
+    for (int x = 1; x <= N; x++) {
+        for (int y = 1; y <= M; y++) {
+            if (x == N && y == M)
+                break;
             
-            if (nextX < 1 || nextX > N || nextY < 1 || nextY > M)
-                continue;
-            
-            dp[nextX][nextY] = max(dp[cur.first][cur.second] + a[nextX][nextY], dp[nextX][nextY]);
-            Q.push({ nextX, nextY });
+            for (int dist = 0; dist < 3; dist++) {
+                int nextX = x + dx[dist];
+                int nextY = y + dy[dist];
+                
+                if (nextX < 1 || nextX > N || nextY < 1 || nextY > M)
+                    continue;
+                
+                dp[nextX][nextY] = max(dp[nextX][nextY], dp[x][y] + a[nextX][nextY]);
+            }
         }
     }
     
