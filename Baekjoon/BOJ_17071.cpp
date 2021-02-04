@@ -15,16 +15,21 @@
 
 using namespace std;
 
-int dpN[MAX]; // 수빈이가 index위치까지 도달하는데 걸리는 시간
 int dpK[MAX]; // index초 후 동생의 위치
 int N, K;
 
 void getDpK() {
+    fill_n(dpK, MAX, -1);
+    
     dpK[0] = K;
-    for (int i = 1; i <= MAX; i++) {
-        if (dpK[i - 1] + i > MAX)
-            return;
+    
+    int i = 1;
+    while (true) {
+        if(dpK[i - 1] + i > MAX)
+            break;
+        
         dpK[i] = dpK[i - 1] + i;
+        i++;
     }
 }
 
@@ -33,37 +38,45 @@ int main() {
     cin.tie(NULL); cout.tie(NULL);
     
     cin >> N >> K;
+    
+    if (N == K) {
+        cout << "0" << endl;
+        return 0;
+    }
+    
     getDpK();
     
-    queue<int> Q;
-    Q.push(N);
-    dpN[N] = 0;
+    queue<pair<int, int>> Q;
+    Q.push({ N, 0 });
     while (!Q.empty()) {
-        auto cur = Q.front(); Q.pop();
+        auto cur = Q.front().first;
+        auto curTime = Q.front().second;
+        Q.pop();
         
         for (int next : {cur + 1, cur - 1, 2 * cur}) {
-//            cout << next << endl;
             
             if (next < 0 || next >= MAX) // 해당 범위로 이동하는 것은 불가능
                 continue;
             
-            dpN[next] = dpN[cur] + 1; //
             
-            if (dpK[dpN[next]] == next) {
-                cout << dpN[next] << endl;
+            int nextTime = curTime + 1;
+            
+            if (dpK[nextTime] == next) {
+                cout << nextTime << endl;
                 return 0;
             }
             
-            if (dpK[dpN[next]] > MAX) {
+            if (dpK[nextTime] > MAX || dpK[nextTime] == -1) {
                 cout << -1 << endl;
                 return 0;
             }
             
-            Q.push(next);
+            Q.push({ next, nextTime });
         }
     }
     
     cout << -1 << endl;
+
     
     return 0;
 }
