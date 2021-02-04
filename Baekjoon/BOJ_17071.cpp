@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <queue>
+#include <vector>
 
 #define MAX 500001
 
@@ -38,40 +38,41 @@ int main() {
     cin.tie(NULL); cout.tie(NULL);
     
     cin >> N >> K;
-    
+
     if (N == K) {
         cout << "0" << endl;
         return 0;
     }
-    
+
     getDpK();
+
+    vector<pair<int, int>> v;
+    v.push_back({ N, 0 });
     
-    queue<pair<int, int>> Q;
-    Q.push({ N, 0 });
-    while (!Q.empty()) {
-        auto cur = Q.front().first;
-        auto curTime = Q.front().second;
-        Q.pop();
-        
+    while (v.size() != 0) {
+        auto cur = v.front().first;
+        auto curTime = v.front().second;
+        v.erase(v.begin());
+
         for (int next : {cur + 1, cur - 1, 2 * cur}) {
-            
+
             if (next < 0 || next >= MAX) // 해당 범위로 이동하는 것은 불가능
                 continue;
-            
-            
+
+
             int nextTime = curTime + 1;
-            
+
             if (dpK[nextTime] == next) {
                 cout << nextTime << endl;
                 return 0;
             }
-            
+
             if (dpK[nextTime] > MAX || dpK[nextTime] == -1) {
                 cout << -1 << endl;
                 return 0;
             }
-            
-            Q.push({ next, nextTime });
+
+            v.push_back({ next, nextTime });
         }
     }
     
