@@ -58,7 +58,7 @@ int main() {
     for (int i = 1; i <= N; i++) {
         cout << switches[i] << " ";
         
-        if (i % 20 == 0 || i == N) {
+        if (i % MAX_INDEX == 0 || i == N) {
             cout << endl;
             continue;
         }
