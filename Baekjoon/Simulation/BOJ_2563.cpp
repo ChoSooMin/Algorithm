@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ int main() {
         v.push_back({ x, y });
     }
     
+    vector<pair<int, int>> already;
     for (int i = 0; i < v.size() - 1; i++) {
         int aX = v.at(i).first;
         int aY = v.at(i).second;
@@ -34,22 +36,36 @@ int main() {
             int bX = v.at(j).first;
             int bY = v.at(j).second;
             
+            if (aX == bX && aY == bY) {
+                auto p = make_pair(bX, bY);
+                auto f = find(already.begin(), already.end(), p);
+                
+                if (f != already.end()) {
+                    continue;
+                }
+                else {
+                    answer -= 100;
+                    already.push_back(p);
+                }
+            }
+            
             int absX = 0;
             int absY = 0;
-            if (bX < aX && aX < bX + 10 && bX + 10 < aX + 10) {
+            if (bX <= aX && aX <= bX + 10 && bX + 10 <= aX + 10) {
                 absX = abs((bX + 10) - aX);
             }
-            if (aX < bX && bX < aX + 10 && aX + 10 < bX + 10) {
+            if (aX <= bX && bX <= aX + 10 && aX + 10 <= bX + 10) {
                 absX = abs((aX + 10) - bX);
             }
             
-            if (bY < aY && aY < bY + 10 && bY + 10 < aY + 10) {
+            if (bY <= aY && aY <= bY + 10 && bY + 10 <= aY + 10) {
                 absY = abs((bY + 10) - aY);
             }
-            if (aY < bY && bY < aY + 10 && aY + 10 < bY + 10) {
+            if (aY <= bY && bY <= aY + 10 && aY + 10 <= bY + 10) {
                 absY = abs((aY + 10) - bY);
             }
         
+            
             
             if (absX != 0 && absY != 0) {
                 answer -= absX * absY;
