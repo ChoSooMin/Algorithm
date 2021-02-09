@@ -23,9 +23,15 @@ int main() {
     int N;
     cin >> N;
     
+    int maxX = 0, maxY = 0; // 효율성을 위해 maxX, maxY를 사용한다.
     for (int test_case = 0; test_case < N; test_case++) {
         int x, y;
         cin >> x >> y;
+        
+        if (maxX < x)
+            maxX = x;
+        if (maxY < y)
+            maxY = y;
         
         for (int i = x; i < x + 10; i++) {
             for (int j = y; j < y + 10; j++) {
@@ -35,8 +41,8 @@ int main() {
     }
     
     int answer = 0;
-    for (int i = 0; i < MAX; i++) {
-        for (int j = 0; j < MAX; j++) {
+    for (int i = 0; i < maxX + 10; i++) { // 100까지 다 확인할 필요 없이 maxX와 maxY를 사용한다.
+        for (int j = 0; j < maxY + 10; j++) {
             if (p[i][j] == 1)
                 answer++;
         }
