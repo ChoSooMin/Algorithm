@@ -9,51 +9,13 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
-void getAnswer(int A, int B) {
-    vector<int> a;
-    vector<int> b;
-    
-    vector<int>::iterator findA = b.end();
-    vector<int>::iterator findB = a.end();
-    while (A != B) {
-        if (A % 2 == 0) {
-            A /= 2;
-        }
-        else {
-            A = (A - 1) / 2;
-        }
-        
-        if (B % 2 == 0) {
-            B /= 2;
-        }
-        else {
-            B = (B - 1) / 2;
-        }
-        a.push_back(A);
-        b.push_back(B);
-
-        findA = find(b.begin(), b.end(), A);
-        if (findA != b.end()) {
-            cout << (*findA) * 10 << endl;
-            break;
-        }
-        
-        findB = find(a.begin(), a.end(), B);
-        if (findB != a.end()) {
-            cout << (*findB) * 10 << endl;
-            break;
-        }
-    }
-    
-    
-}
-
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+    
     int T;
     cin >> T;
     
@@ -61,7 +23,16 @@ int main() {
         int A, B;
         cin >> A >> B;
         
-        getAnswer(A, B);
+        while (A != B) { // 같으면 끝난다.
+            if (A > B) { // A가 더 클 경우
+                A /= 2;
+            }
+            else { // B가 더 클 경우
+                B /= 2;
+            }
+        }
+        
+        cout << A * 10 << "\n";
     }
     
     return 0;
