@@ -12,24 +12,20 @@
 
 using namespace std;
 
-string dp[46];
+int dpA[46];
+int dpB[46];
 
 int main() {
     int K;
     cin >> K;
+
+    dpA[0] = 1; dpA[1] = 0;
+    dpB[0] = 0; dpB[1] = 1;
     
-    dp[0] = "A"; dp[1] = "B";
     for (int i = 2; i <= K; i++) {
-        dp[i] = dp[i - 1] + dp[i - 2];
+        dpA[i] = dpA[i - 1] + dpA[i - 2];
+        dpB[i] = dpB[i - 1] + dpB[i - 2];
     }
     
-    int a = 0, b = 0;
-    for (int index = 0; index < dp[K].length(); index++) {
-        if (dp[K][index] == 'A')
-            a++;
-        else
-            b++;
-    }
-    
-    cout << a << " " << b;
+    cout << dpA[K] << " " << dpB[K];
 }
