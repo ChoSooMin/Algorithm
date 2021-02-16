@@ -19,12 +19,15 @@ int main() {
     int E, S, M;
     cin >> E >> S >> M;
     
-    int year = 1;
+    int num = 0;
+    int year = 0;
     while(true) {
-        if (year % 15 == E && year % 28 == S && year % 19 == M)
+        year = 19 * num + M;
+        
+        if (year % 15 == E && year % 28 == S)
             break;
         
-        year++;
+        num++;
     }
     
     cout << year << "\n";
