@@ -9,66 +9,56 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <vector>
+
+int board[101][101]; // 도화지
+// 인접한 부분이 비어있는 부분인지 확인하기 위한 변수
+int dx[4] = { 0, 0, -1, 1 };
+int dy[4] = { -1, 1, 0, 0 };
 
 using namespace std;
 
+/**
+ 1. 도화지에 색종이가 올려진 부분을 모두 1로 바꾼다.
+ 2. for문을 돌려서, 색종이가 올려진 부분이라면 인접한 곳이 비어있을 경우, answer + 1을 한다.
+ */
+void fillPaper(int x, int y) {
+    for (int i = x; i < x + 10; i++) {
+        for (int j = y; j < y + 10; j++) {
+            board[i][j] = 1;
+        }
+    }
+}
+
 int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(NULL); cout.tie(NULL);
+    
     int num;
     cin >> num;
     
-    // answer에 40 * num을 넣어두고, 겹치는 부분의 둘레를 뺀다.
-    int answer = 40 * num;
-    vector<pair<int, int>> v;
     for (int i = 0; i < num; i++) {
         int x, y;
         cin >> x >> y;
-        v.push_back({ x, y });
+        fillPaper(x, y);
     }
     
-    for (int i = 0; i < v.size() - 1; i++) {
-        for (int j = i + 1; j < v.size(); j++) {
-            pair<int, int> a = v.at(i);
-            pair<int, int> b = v.at(j);
-            
-            int minus = 0;
-            
-            if (a.first == b.first && a.second == b.second) {
-                minus += (a.first + a.second);
-                minus *= 2;
-                
-                answer -= minus;
-                continue;
-            }
-            
-            if ((a.first <= b.first) && (b.first <= a.first + 10) && (a.first + 10 <= b.first + 10)) {
-                
-                if ((a.second <= b.second) && (b.second <= a.second + 10) && (a.second + 10 <= b.second + 10)) {
-                    minus += ((a.first + 10) - b.first);
-                    minus += ((a.second + 10) - b.second);
-                }
-                else if ((b.second <= a.second) && (a.second <= b.second + 10) && (b.second + 10 <= a.second + 10)) {
-                    minus += ((a.first + 10) - b.first);
-                    minus += ((b.second + 10) - a.second);
+    int answer = 0;
+    
+    for (int i = 1; i <= 100; i++) {
+        for (int j = 1; j <= 100; j++) {
+            if (board[i][j] == 1) { // 색종이가 올려진 부분이라면
+                for (int dir = 0; dir < 4; dir++) { // 인접한 곳이 비었는지 확인
+                    int nextX = i + dx[dir];
+                    int nextY = j + dy[dir];
+                    
+                    if (board[nextX][nextY] == 0) // 인접한 곳이 비었다면
+                        answer++; // answer + 1
                 }
             }
-            else if ((b.first <= a.first) && (a.first <= b.first + 10) && (b.first + 10 <= a.first + 10)) {
-                if ((a.second <= b.second) && (b.second <= a.second + 10) && (a.second + 10 <= b.second + 10)) {
-                    minus += ((b.first + 10) - a.first);
-                    minus += ((a.second + 10) - b.second);
-                }
-                else if ((b.second <= a.second) && (a.second <= b.second + 10) && (b.second + 10 <= a.second + 10)) {
-                    minus += ((b.first + 10) - a.first);
-                    minus += ((b.second + 10) - a.second);
-                }
-            }
-            
-            minus *= 2;
-            answer -= minus;
         }
     }
     
-    cout << answer << endl;
+    cout << answer << "\n";
     
     return 0;
 }
