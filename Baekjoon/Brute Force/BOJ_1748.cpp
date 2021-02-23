@@ -25,15 +25,9 @@ int main() {
     cin >> N;
     
     int answer = 0;
-    string str = to_string(N);
-    for (int i = 1; i < str.length(); i++) {
-        int num = pow(10, i) - pow(10, i - 1);
-        
-        answer += i * num;
+    for (int i = 1; i <= N; i++) {
+        answer += to_string(i).length();
     }
-    
-    int minus = pow(10, str.length() - 1) - 1;
-    answer += str.length() * (N - minus);
     
     cout << answer << "\n";
     
