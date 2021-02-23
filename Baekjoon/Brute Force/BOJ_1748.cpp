@@ -5,7 +5,7 @@
 //  Created by 조수민 on 2021/02/24.
 //  Copyright © 2021 조수민. All rights reserved.
 //
-//  수 이어 쓰기 1
+//  수 이어 쓰기 1(https://www.acmicpc.net/problem/1748)
 
 #include <stdio.h>
 #include <iostream>
@@ -23,7 +23,7 @@ int main() {
     int answer = 0;
     string str = to_string(N);
     for (int i = 1; i < str.length(); i++) {
-        int num = pow(10, i) - pow(10, i - 1);
+        int num = 9 * pow(10, i - 1);
 
         answer += i * num;
     }
