@@ -11,11 +11,7 @@
 #include <iostream>
 #include <math.h>
 
-#define MAX 100000001
-
 using namespace std;
-
-int dp[MAX];
 
 int main() {
     ios::sync_with_stdio(0);
@@ -23,13 +19,19 @@ int main() {
     
     int N;
     cin >> N;
-    
+
     int answer = 0;
-    for (int i = 1; i <= N; i++) {
-        answer += to_string(i).length();
+    string str = to_string(N);
+    for (int i = 1; i < str.length(); i++) {
+        int num = pow(10, i) - pow(10, i - 1);
+
+        answer += i * num;
     }
-    
+
+    int minus = pow(10, str.length() - 1) - 1;
+    answer += str.length() * (N - minus);
+
     cout << answer << "\n";
-    
+
     return 0;
 }
