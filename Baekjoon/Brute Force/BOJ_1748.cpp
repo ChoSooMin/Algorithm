@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <math.h>
 
 #define MAX 100000001
 
@@ -23,13 +24,18 @@ int main() {
     int N;
     cin >> N;
     
-    dp[1] = 1;
-    for (int i = 2; i <= N; i++) {
-        string str = to_string(i);
-        dp[i] = dp[i - 1] + str.length();
+    int answer = 0;
+    string str = to_string(N);
+    for (int i = 1; i < str.length(); i++) {
+        int num = pow(10, i) - pow(10, i - 1);
+        
+        answer += i * num;
     }
     
-    cout << dp[N] << "\n";
+    int minus = pow(10, str.length() - 1) - 1;
+    answer += str.length() * (N - minus);
+    
+    cout << answer << "\n";
     
     return 0;
 }
