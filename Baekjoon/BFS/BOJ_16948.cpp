@@ -47,8 +47,6 @@ int main() {
         int curX = cur.first;
         int curY = cur.second;
         
-        cout << "(curX, curY) = (" << curX << ", " << curY << ") || ";
-        
         for (int dir = 0; dir < 6; dir++) {
             int nextX = curX + dx[dir];
             int nextY = curY + dy[dir];
@@ -56,15 +54,11 @@ int main() {
             if (nextX < 0 || nextY < 0 || nextX >= N || nextY >= N)
                 continue;
             
-            cout << "(nextX, nextY) = (" << nextX << ", " << nextY << ")" << "\n";
-            
-            chess[nextX][nextY] = min(chess[curX][curY] + 1, chess[nextX][nextY]);
-            visit[nextX][nextY] = 1;
-            
-            if (nextX == r2 && nextY == c2)
-                break;
-            
-            Q.push({ nextX, nextY });
+            if (!visit[nextX][nextY]) {
+                visit[nextX][nextY] = 1;
+                chess[nextX][nextY] = chess[curX][curY] + 1;
+                Q.push({ nextX, nextY });
+            }
         }
     }
     
