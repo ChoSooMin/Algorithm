@@ -11,7 +11,7 @@
 #include <iostream>
 #include <queue>
 
-#define MAX 501 // 삼각형의 최대 크기는 500이므로 500 * 501 / 2
+#define MAX 501
 
 using namespace std;
 
@@ -46,10 +46,10 @@ int main() {
     dp[i][j] = triangle[i][j];
     for (int i = 2; i <= n; i++) {
         for (int j = 1; j <= i; j++) {
-            if (j - 1 > i - 1) {
+            if (j - 1 > i - 1) { // 오른쪽 위가 범위를 벗어날 경우
                 dp[i][j] = max(dp[i][j], dp[i - 1][j] + triangle[i][j]);
             }
-            else if (i - 1 <= 0) {
+            else if (i - 1 <= 0) { // 왼쪽 위가 범위를 벗어날 경우
                 dp[i][j] = max(dp[i][j], dp[i - 1][j - 1] + triangle[i][j]);
             }
             else {
