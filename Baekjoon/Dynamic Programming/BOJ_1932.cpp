@@ -11,58 +11,60 @@
 #include <iostream>
 #include <queue>
 
+#define MAX 501 // 삼각형의 최대 크기는 500이므로 500 * 501 / 2
+
 using namespace std;
 
+int triangle[MAX][MAX]; // i층에 있는 j번째 숫자
+int dp[MAX][MAX];
 int dy[2] = { 0, 1 };
 
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(NULL); cout.tie(NULL);
-
+    
     // input
     int n;
     cin >> n;
-
-    int triangle[n + 1][n + 1]; // i층에 있는 j번째 숫자
-    int dp[n + 1][n + 1];
     
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= i; j++) {
             cin >> triangle[i][j];
-            dp[i][j] = triangle[i][j];
         }
     }
-
+    
     /**
+     (i, j) 기준
      왼쪽 아래 : (i + 1, j)
      오른쪽 아래 : (i + 1, j + 1)
+     
+     (i, j) 기준
+     왼쪽 위 : (i - 1, j - 1)
+     오른쪽 위 : (i - 1, j)
      */
-
-    queue<pair<int, int>> Q;
-    Q.push({ 1, 1 });
-    dp[1][1] = triangle[1][1];
-
-    while (!Q.empty()) {
-        auto cur = Q.front(); Q.pop();
-
-        for (int dir = 0; dir < 2; dir++) {
-            int nextI = cur.first + 1;
-            int nextJ = cur.second + dy[dir];
-
-            if (nextI > n || nextJ > nextI)
-                continue;
-
-            dp[nextI][nextJ] = max(dp[cur.first][cur.second] + triangle[nextI][nextJ], dp[nextI][nextJ]);
-            Q.push({ nextI, nextJ });
+    int i = 1, j = 1;
+    dp[i][j] = triangle[i][j];
+    for (int i = 2; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            if (j - 1 > i - 1) {
+                dp[i][j] = max(dp[i][j], dp[i - 1][j] + triangle[i][j]);
+            }
+            else if (i - 1 <= 0) {
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - 1] + triangle[i][j]);
+            }
+            else {
+                dp[i][j] = max(dp[i - 1][j - 1] + triangle[i][j], dp[i - 1][j] + triangle[i][j]);
+            }
         }
     }
-
+    
     int ans = 0;
     for (int j = 1; j <= n; j++) {
         ans = max(ans, dp[n][j]);
     }
-
+    
     cout << ans << "\n";
-
+    
+    
     return 0;
 }
