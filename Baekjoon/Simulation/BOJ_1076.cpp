@@ -24,7 +24,7 @@ int main() {
     
     string ans = "";
     string f, s;
-    int t;
+    long long t;
     for (int i = 0; i < 10; i++) {
         if (color[i] == first) {
             f = to_string(i);
@@ -38,7 +38,7 @@ int main() {
     }
     
     ans += (f + s);
-    int answer = stoi(ans) * pow(10, t);
+    long long answer = stoi(ans) * pow(10, t);
     cout << answer << "\n";
     
     return 0;
