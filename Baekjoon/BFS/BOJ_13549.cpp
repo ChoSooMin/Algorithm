@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <queue>
-#include <deque>
 
 #define MAX 100001
 
@@ -25,28 +24,30 @@ int main() {
     int N, K;
     cin >> N >> K;
     
-    deque<pair<int, int>> Q;
-    Q.push_front({ N, 0 });
-    
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;
+    Q.push({ N, 0 });
+    visit[N] = true;
     
     while (!Q.empty()) {
-        auto cur = Q.front(); Q.pop_front();
-        int curN = cur.first;
-        int curTime = cur.second;
+        int curLoc = Q.top().first;
+        int curTime = Q.top().second;
+        Q.pop();
         
-        if (curN == K) {
-            cout << cur.second << "\n";
+        if (curLoc == K) {
+            cout << curTime << "\n";
             break;
         }
         
-        for (int next : { curN + 1, curN - 1, 2 * curN }) {
-            visit[next] = true;
-            
-            if (next == 2 * curN) {
-                Q.push_front({ next, curTime });
-            }
-            else {
-                Q.push_back({ next, curTime + 1 });
+        for (int next : { curLoc + 1, curLoc - 1, 2 * curLoc }) {
+            if (0 <= next && next < MAX && visit[next] == false) {
+                visit[next] = true;
+                
+                if (next == 2 * curLoc) {
+                    Q.push({ next, curTime });
+                }
+                else {
+                    Q.push({ next, curTime + 1 });
+                }
             }
         }
     }
