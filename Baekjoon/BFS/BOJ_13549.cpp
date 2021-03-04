@@ -25,12 +25,12 @@ int main() {
     cin >> N >> K;
     
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;
-    Q.push({ N, 0 });
+    Q.push({ 0, N });
     visit[N] = true;
     
     while (!Q.empty()) {
-        int curLoc = Q.top().first;
-        int curTime = Q.top().second;
+        int curTime = Q.top().first;
+        int curLoc = Q.top().second;
         Q.pop();
         
         if (curLoc == K) {
@@ -43,10 +43,10 @@ int main() {
                 visit[next] = true;
                 
                 if (next == 2 * curLoc) {
-                    Q.push({ next, curTime });
+                    Q.push({ curTime, next });
                 }
                 else {
-                    Q.push({ next, curTime + 1 });
+                    Q.push({ curTime + 1, next });
                 }
             }
         }
