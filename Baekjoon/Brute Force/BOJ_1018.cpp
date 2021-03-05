@@ -76,13 +76,15 @@ int main() {
     }
     
     int answer = 0;
+    int minAns = 65;
     for (int i = 0; i <= M - 8; i++) {
         for (int j = 0; j <= N - 8; j++) {
             answer = min(WB_count(i, j), BW_count(i, j));
+            minAns = min(minAns, answer);
         }
     }
     
-    cout << answer << "\n";
+    cout << minAns << "\n";
     
     return 0;
 }
