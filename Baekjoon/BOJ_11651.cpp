@@ -28,7 +28,7 @@ int main() {
     
     sort(v.begin(), v.end());
     for (int i = 0; i < v.size(); i++) {
-        cout << v.at(i).second << ", " << v.at(i).first << "\n";
+        cout << v.at(i).second << " " << v.at(i).first << "\n";
     }
     
     return 0;
