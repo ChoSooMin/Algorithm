@@ -42,30 +42,32 @@ void input() {
 
 // wheelNum번 바퀴를 direction 방향으로 회전시킨다.
 void rotate(int wheelNum, int direction) {
+    int temp[8];
+    
     if (direction == 1) { // 시계 방향으로 회전
         // index + 1로 이동하고, 7 인덱스가 0 인덱스로 이동한다.
-        int tmp = wheels[wheelNum][7];
-        for (int i = 6; i >= 0; i--) {
-            wheels[wheelNum][i + 1] = wheels[wheelNum][i];
+        for (int i = 0; i <= 6; i++) {
+            temp[i + 1] = wheels[wheelNum][i];
         }
-        wheels[wheelNum][0] = tmp;
+        temp[0] = wheels[wheelNum][7];
     }
     else { // 반시계 방향으로 회전
         // index - 1로 이동하고, 0 인덱스가 7 인덱스로 이동한다.
-        int tmp = wheels[wheelNum][0];
-        for (int i = 0; i <= 7; i++) {
-            wheels[wheelNum][i - 1] = wheels[wheelNum][i];
+        for (int i = 7; i >= 1; i--) {
+            temp[i - 1] = wheels[wheelNum][i];
         }
-        wheels[wheelNum][7] = tmp;
+        temp[7] = wheels[wheelNum][0];
+    }
+    
+    for (int i = 0; i <= 7; i++) {
+        wheels[wheelNum][i] = temp[i];
     }
 }
 
 void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 맞닿아있다
-    rotate(standard, direction);
-    
+    // wheelNum 톱니 기준 오른쪽 톱니들을 돌려준다.
     int before = standard;
     int beforeDirection = direction;
-    // wheelNum 톱니 기준 오른쪽 톱니들을 돌려준다.
     for (int i = standard + 1; i <= T; i++) { // 이전의 2번과 현재의 6번을 비교한다.
         if (beforeDirection != 0) { // 이전의 톱니가 회전할 경우
             if (wheels[before][2] == wheels[i][6]) { // 맞닿은 극이 같다면 회전하지 않는다.
@@ -85,9 +87,9 @@ void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 �
         }
     }
     
+    // wheelNum 톱니 기준 왼쪽 톱니들을 돌려준다.
     before = standard;
     beforeDirection = direction;
-    // wheelNum 톱니 기준 왼쪽 톱니들을 돌려준다.
     for (int i = standard - 1; i >= 1; i--) { // 이전의 6번과 현재의 2번을 비교한다.
         if (beforeDirection != 0) { // 이전의 톱니가 회전할 경우
             if (wheels[before][6] == wheels[i][2]) { // 맞닿은 극이 같다면 회전하지 않는다.
@@ -106,6 +108,8 @@ void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 �
             before = i; // 다음 톱니바퀴와 비교하기 위해 before을 현재 톱니바퀴로 바꿔준다.
         }
     }
+    
+    rotate(standard, direction);
 }
 
 int main() {
