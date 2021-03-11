@@ -65,6 +65,9 @@ void rotate(int wheelNum, int direction) {
 }
 
 void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 맞닿아있다
+    vector<pair<int, int>> v; // { 회전시킬 바퀴 번호, 회전 방향 }을 v에 넣어둔다.
+    v.push_back({ standard, direction }); // 기준 바퀴, 회전 방향을 먼저 넣어둔다.
+    
     // wheelNum 톱니 기준 오른쪽 톱니들을 돌려준다.
     int before = standard;
     int beforeDirection = direction;
@@ -80,7 +83,7 @@ void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 �
                 else {
                     beforeDirection = 1;
                 }
-                rotate(i, beforeDirection); // 현재 바퀴를 회전시킨다.
+                v.push_back({ i, beforeDirection }); // 벡터에 { 현재 바퀴 번호, 회전시킬 방향 } 쌍으로 넣어둔다.
             }
             
             before = i; // 다음 톱니바퀴와 비교하기 위해 before을 현재 톱니바퀴로 바꿔준다.
@@ -102,14 +105,18 @@ void rotateWheels(int standard, int direction) { // 톱니는 2번과 6번이 �
                 else {
                     beforeDirection = 1;
                 }
-                rotate(i, beforeDirection); // 현재 바퀴를 회전시킨다.
+                v.push_back({ i, beforeDirection }); // 벡터에 { 현재 바퀴 번호, 회전시킬 방향 } 쌍으로 넣어둔다.
             }
             
             before = i; // 다음 톱니바퀴와 비교하기 위해 before을 현재 톱니바퀴로 바꿔준다.
         }
     }
     
-    rotate(standard, direction);
+    // 벡터를 조회하며 회전시켜야 할 바퀴들을 모두 회전시켜준다.
+    for (int i = 0; i < v.size(); i++) {
+        auto cur = v.at(i);
+        rotate(cur.first, cur.second);
+    }
 }
 
 int main() {
